@@ -1,5 +1,7 @@
 package Zihao.quizapp;
 
+import android.content.Context;
+
 public class Question {
     private int mTextResId;
     private int mHintTextResId;
@@ -16,6 +18,17 @@ public class Question {
 
     public void setTextResId(int textResId) {
         mTextResId = textResId;
+    }
+
+    public String getText (Context ctx)
+    {
+        return ctx.getString(mTextResId);
+    }
+    //stub
+
+    public String getAnswerText (Context ctx)
+    {
+        return "";
     }
 
 

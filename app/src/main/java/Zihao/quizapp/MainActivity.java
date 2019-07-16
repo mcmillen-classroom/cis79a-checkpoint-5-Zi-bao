@@ -2,6 +2,7 @@ package Zihao.quizapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private TextView mTextView;
     private TextView mScoreTextView;
@@ -108,6 +111,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //setup the first question
         setupQuestion();
         mScoreTextView.setText("Score: " + mScore);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData)
+    {
+        if(resultCode != RESULT_OK)
+        {
+            return;
+        }
+
+        if(requestCode == REQUEST_CODE_CHEAT && resultData !=null)
+        {
+            mCheated = CheatActivity.didCheat(resultData);
+        }
+
     }
 
     @Override
@@ -213,7 +231,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mDButton.setEnabled(false);
                 mBButton.setEnabled(false);
             }
-        }else if (view.getId() == R.id.cheat_button) {
+        }else if (view.getId() == R.id.cheat_button)
+        {
+            //TODO: Launch CheatActivity
+            Intent cheatIntent = CheatActivity.newIntent(this, mQuestions [mIndex]);
+            startActivityForResult(cheatIntent, REQUEST_CODE_CHEAT);
         }
 
         if (mIndex > mQuestions.length - 1 || mIndex < 0) {
@@ -223,9 +245,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupQuestion();
 
     }
-
-
-
 
 
 
@@ -259,7 +278,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    public boolean checkAnswer(boolean userInput) {
+    public boolean checkAnswer(boolean userInput)
+    {
+        if (mCheated)
+        {
+            Toast.makeText(this,R.string.cheat_shame, Toast.LENGTH_LONG).show();
+            return false;
+
+        }
         if (mQuestions[mIndex].checkAnswer(userInput)) {
             mFalseButton.setEnabled(false);
             mTrueButton.setEnabled(false);
@@ -281,7 +307,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     }
-    public boolean checkAnswer(String userInput){
+    public boolean checkAnswer(String userInput)
+    {
+        if (mCheated)
+        {
+            Toast.makeText(this, R.string.cheat_shame, Toast.LENGTH_LONG).show();
+            return false;
+        }
         if (mQuestions[mIndex].checkAnswer(userInput)) {
             mFalseButton.setEnabled(false);
             mTrueButton.setEnabled(false);

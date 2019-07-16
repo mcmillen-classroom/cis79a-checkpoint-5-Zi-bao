@@ -1,10 +1,16 @@
 package Zihao.quizapp;
 
+import android.content.Context;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class FillTheBlankQuestion extends Question {
 
     private String[] mFillAnswers;
 
-    public FillTheBlankQuestion(int textResId, int hintTextResId, String[] fillAnswers) {
+    public FillTheBlankQuestion(int textResId, int hintTextResId, String[] fillAnswers)
+    {
         super(textResId, hintTextResId);
         mFillAnswers = fillAnswers;
     }
@@ -23,6 +29,12 @@ public class FillTheBlankQuestion extends Question {
     @Override
     public boolean isFillTheBlankQuestion(){
         return true;
+    }
+
+    @Override
+    public String getAnswerText (Context ctx)
+    {
+        return Arrays.toString(mFillAnswers);
     }
 }
 

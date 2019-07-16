@@ -11,6 +11,7 @@
     <string name="cheat_button">Cheat!</string>
     <string name="cheat_warning">Are you sure?</string>
     <string name="show_answer_button">Show me the Answer</string>
+    <string name="cheat_shame">CHEATER!</string>
 
 
     <string name="question_1">In Legend of Zelda games, players usually play as Link</string>

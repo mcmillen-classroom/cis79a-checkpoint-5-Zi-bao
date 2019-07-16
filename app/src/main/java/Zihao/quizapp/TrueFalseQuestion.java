@@ -1,5 +1,7 @@
 package Zihao.quizapp;
 
+import android.content.Context;
+
 public class TrueFalseQuestion extends Question {
     private boolean mAnswer;
 
@@ -16,6 +18,12 @@ public class TrueFalseQuestion extends Question {
     @Override
     public boolean isTrueFalseQuestion(){
         return true;
+    }
+
+    @Override
+    public String getAnswerText (Context ctx)
+    {
+        return "" + mAnswer;
     }
 
 }
